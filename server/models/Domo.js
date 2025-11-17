@@ -3,6 +3,9 @@ const _ = require('underscore');
 
 const setName = (name) => _.escape(name).trim();
 
+// possible domo class names
+const allowedClasses = ['Fighter', 'Tank', 'Healer', 'Debuffer'];
+
 const DomoSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -13,6 +16,11 @@ const DomoSchema = new mongoose.Schema({
   age: {
     type: Number,
     min: 0,
+    required: true,
+  },
+  classType: {
+    type: String,
+    trim: true,
     required: true,
   },
   owner: {
@@ -29,7 +37,9 @@ const DomoSchema = new mongoose.Schema({
 DomoSchema.statics.toAPI = (doc) => ({
   name: doc.name,
   age: doc.age,
+  classType: doc.classType,
 });
 
 const DomoModel = mongoose.model('Domo', DomoSchema);
+DomoModel.allowedClasses = allowedClasses;
 module.exports = DomoModel;
