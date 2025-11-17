@@ -3,9 +3,7 @@ const models = require('../models');
 
 const { Account } = models;
 
-const loginPage = (req, res) => {
-  res.render('login', { account: req.session.account });
-};
+const loginPage = (req, res) => res.render('login');
 
 const logout = (req, res) => {
   req.session.destroy();

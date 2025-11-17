@@ -140,15 +140,6 @@ const init = () => {
         return false;
     });
 
-    if (changePassButton) {
-        changePassButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            root.render(<ChangePasswordWindow />);
-            return false;
-        });
-    }
-
-
     root.render(<LoginWindow />);
 };
 

@@ -11,17 +11,17 @@ const handleDomo = (e, onDomoAdded) => {
     const age = e.target.querySelector('#domoAge').value;
     const classType = e.target.querySelector('#domoClass').value;
 
-    if(!name || !age || !classType) {
+    if (!name || !age || !classType) {
         helper.handleError('All fields are required');
         return false;
     }
 
-    helper.sendPost(e.target.action, {name, age, classType}, onDomoAdded);
+    helper.sendPost(e.target.action, { name, age, classType }, onDomoAdded);
     return false;
 }
 
 const DomoForm = (props) => {
-    return(
+    return (
         <form id="domoForm"
             onSubmit={(e) => handleDomo(e, props.triggerReload)}
             name="domoForm"
@@ -34,17 +34,17 @@ const DomoForm = (props) => {
             <label htmlFor="age">Age: </label>
             <input id="domoAge" type="number" min="0" name="age" placeholder="0" />
             <label htmlFor="classType">Class: </label>
-            <input id="domoClass" type="text" name="classType" placeholder="Fighter/Tank/Healer/Debuffer" /> 
+            <input id="domoClass" type="text" name="classType" placeholder="Fighter/Tank/Healer/Debuffer" />
             <input className="makeDomoSubmit" type="submit" value="Make Domo" />
         </form>
     )
 }
 
 const DomoList = (props) => {
-    const[domos, setDomos] = useState(props.domos);
+    const [domos, setDomos] = useState(props.domos);
 
     useEffect(() => {
-        const loadDomosFromServer = async() => {
+        const loadDomosFromServer = async () => {
             const response = await fetch('/getDomos');
             const data = await response.json();
             setDomos(data.domos);
@@ -52,7 +52,7 @@ const DomoList = (props) => {
         loadDomosFromServer();
     }, [props.reloadDomos]);
 
-    if(domos.length === 0) {
+    if (domos.length === 0) {
         return (
             <div className="domoList">
                 <h3 className="emptyDomo">No Domos yet!</h3>
@@ -95,7 +95,15 @@ const App = () => {
 
 const init = () => {
     const root = createRoot(document.getElementById('app'));
-    root.render( <App /> );
+    root.render(<App />);
+
+    const changePassButton = document.getElementById('changePassButton');
+    if (changePassButton) {
+        changePassButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            root.render(<ChangePasswordWindow />);
+        });
+    }
 };
 
 window.onload = init;
